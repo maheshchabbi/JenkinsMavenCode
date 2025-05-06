@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    // Trigger build on Webhook (GitHub Push)
+    triggers {
+        githubPush()
+    }
+
+
+
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build & Unit Test') {
+            steps {
+                sh 'mvn clean test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+                failure {
+                    script { currentBuild.result = 'FAILURE' }
+                }
+            }
+        }
+
+       
+
+        stage('Deploy to Dev') {
+            when {
+                branch 'mahesh'
+            }
+            steps {
+                echo "Deploying build #${env.BUILD_NUMBER} to MAH environment"
+                // Add your dev deployment script/commands here
+            }
+        }
+
+        stage('Deploy to Test') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "Deploying build #${env.BUILD_NUMBER} to PROD environment"
+                // Add your test deployment script/commands here
+            }
+        }
+    }
+
+    post {
+        
+        always {
+            cleanWs()
+        }
+    }
+}
