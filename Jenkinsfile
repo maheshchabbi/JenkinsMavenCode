@@ -20,17 +20,9 @@ pipeline {
             steps {
                 sh 'mvn clean test'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-                failure {
-                    script { currentBuild.result = 'FAILURE' }
-                }
+            
             }
-        }
-
-       
+               
 
         stage('Deploy to Dev') {
             when {
