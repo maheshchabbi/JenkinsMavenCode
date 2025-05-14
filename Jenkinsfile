@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'build'
     }
+    tools {
+        baven 'maven3'
+    }
 
     // Trigger build on Webhook (GitHub Push)
     triggers {
@@ -20,7 +23,7 @@ pipeline {
 
         stage('Build & Unit Test') {
             steps {
-                sh 'mvn clean test'
+                sh 'baven clean test'
             }
             
             }
