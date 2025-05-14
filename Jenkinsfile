@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build & Unit Test') {
             steps {
-                sh 'maven clean test'
+                sh 'mvn clean test'
             }
             
             }
