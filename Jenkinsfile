@@ -20,7 +20,7 @@ pipeline {
 
         stage('Build & Unit Test') {
             steps {
-                bat 'mvn clean test'
+                sh 'mvn clean test'
             }
             
             }
