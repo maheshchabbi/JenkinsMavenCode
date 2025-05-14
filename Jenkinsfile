@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'build'
+    }
 
     // Trigger build on Webhook (GitHub Push)
     triggers {
