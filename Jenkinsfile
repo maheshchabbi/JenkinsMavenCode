@@ -5,6 +5,7 @@ pipeline {
 
     // Trigger build on Webhook (GitHub Push)
     triggers {
+        
         githubPush()
     }
 
